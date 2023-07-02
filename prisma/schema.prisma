@@ -19,6 +19,7 @@ model Book {
   quantity    Int
   bookstore   Bookstore @relation(fields: [bookstoreId], references: [id])
   bookstoreId Int
+  rentals     Rental[]
 
   @@map("books")
 }
@@ -44,7 +45,21 @@ model User {
   hashedRt    String?
   bookstore   Bookstore @relation(fields: [bookstoreId], references: [id])
   bookstoreId Int
+  rentals     Rental[]
 
   @@map("users")
 }
 
+model Rental {
+  id         Int       @id @default(autoincrement())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  bookId     Int
+  userId     Int
+  returnedAt DateTime?
+
+  book Book @relation(fields: [bookId], references: [id])
+  user User @relation(fields: [userId], references: [id])
+
+  @@map("rentals")
+}

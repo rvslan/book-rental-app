@@ -14,13 +14,13 @@ export class BooksController {
     return this.booksService.findAll(userId);
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.booksService.findOne(+id);
+  @Post(':id/rent')
+  async rentBook(@Param('id') bookId: number, @GetCurrentUserId() userId: number) {
+    return this.booksService.rentBook(bookId, userId);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateBookDto: UpdateBookDto) {
-    return this.booksService.update(+id, updateBookDto);
+  @Delete(':id/return')
+  async returnBook(@Param('id') bookId: number, @GetCurrentUserId() userId: number) {
+    return this.booksService.returnBook(bookId, userId);
   }
 }
