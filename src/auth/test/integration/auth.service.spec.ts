@@ -36,6 +36,10 @@ describe("Auth Flow", () => {
   });
 
   afterAll(async () => {
+    await prisma.user.deleteMany({});
+    await prisma.rental.deleteMany({});
+    await prisma.book.deleteMany({});
+    // Close module
     await moduleRef.close();
   });
 

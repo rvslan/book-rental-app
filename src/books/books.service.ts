@@ -1,4 +1,8 @@
-import { ForbiddenException, Injectable, NotFoundException } from "@nestjs/common";
+import {
+  ForbiddenException,
+  Injectable,
+  NotFoundException,
+} from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
 import { Book, User as UserModel } from "@prisma/client";
 
@@ -51,12 +55,10 @@ export class BooksService {
       });
 
       // Decrease the quantity of the book by 1
-      await prisma.book.update({
+      return await prisma.book.update({
         where: { id: bookId },
         data: { quantity: book.quantity - 1 },
       });
-
-      return book;
     });
   }
 
@@ -86,12 +88,10 @@ export class BooksService {
       });
 
       // Increase the quantity of the book by 1
-      await prisma.book.update({
+      return prisma.book.update({
         where: { id: bookId },
         data: { quantity: book.quantity + 1 },
       });
-
-      return book;
     });
   }
 }
