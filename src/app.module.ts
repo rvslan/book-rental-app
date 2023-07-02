@@ -5,6 +5,7 @@ import { AuthModule } from "./auth/auth.module";
 import { AtGuard } from "./common/guards";
 import { PrismaModule } from "./prisma/prisma.module";
 import { config, validationSchema } from './config';
+import { BooksModule } from "./books/books.module";
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { config, validationSchema } from './config';
       load: [config],
     }),
     AuthModule,
+    BooksModule,
     PrismaModule,
   ],
   providers: [
