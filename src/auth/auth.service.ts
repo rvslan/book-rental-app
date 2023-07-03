@@ -29,33 +29,12 @@ export class AuthService {
     const saltRounds = this.config.get<number>("SALT_ROUNDS");
     const hash = await bcrypt.hash(dto.password, saltRounds);
 
-    // Check if the email is already in use
-    const userExists = await this.prisma.user.findUnique({
-      where: {
-        email: dto.email,
-      },
-    });
-
-    // We use the count to check if the email is already in use.
-    if (userExists) throw new ForbiddenException("Email already in use");
-
-    // Find the selected bookstore by ID
-    const selectedBookstore = await this.prisma.bookstore.findUnique({
-      where: {
-        id: dto.bookstoreId,
-      },
-    });
-
-    if (!selectedBookstore) {
-      throw new BadRequestException("Invalid bookstoreId");
-    }
-
     const user = await this.prisma.user
       .create({
         data: {
           email: dto.email,
           hash,
-          bookstoreId: selectedBookstore.id,
+          bookstoreId: dto.bookstoreId,
         },
       })
       .catch((error) => {
@@ -177,7 +156,7 @@ export class AuthService {
     const [at, rt] = await Promise.all([
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>("AT_SECRET"),
-        expiresIn: "15m",
+        expiresIn: "60m",
       }),
       this.jwtService.signAsync(jwtPayload, {
         secret: this.config.get<string>("RT_SECRET"),

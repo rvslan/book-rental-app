@@ -88,7 +88,7 @@ describe("bookService", () => {
       });
 
       // Call the findAll method
-      const result: Book[] = await bookService.findAll(user.id);
+      const result: Book[] = await bookService.findAll(user);
 
       // Expect the result to contain the created books
       expect(result).toEqual([book1, book2]);
