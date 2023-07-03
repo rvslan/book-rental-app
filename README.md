@@ -1,74 +1,85 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
-</p>
+# Book Rental System
 
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
+The Book Rental System is a web application that allows users to manage and search for books. It provides features such as listing all books, searching for books by title or author, and renting/returning books.
 
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
+## System Architecture
 
-## Description
+The system is built using the following technologies:
 
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Node.js: A JavaScript runtime for server-side development.
+- Nest.js: A progressive Node.js framework for building efficient and scalable web applications.
+- Prisma: A modern database toolkit for TypeScript and Node.js that simplifies database access.
+
+The application follows a layered architecture, separating concerns into modules, controllers, services, and data access layers. It uses RESTful API endpoints to handle requests and responses.
+
+## Prerequisites
+
+Before running the application, make sure you have the following installed on your machine:
+
+- Node.js (v14 or higher)
+- npm (Node Package Manager)
+- Docker for (PostgreSQL database)
 
 ## Installation
 
-```bash
-$ npm install
-```
+Follow these steps to set up and run the application:
 
-## Running the app
+1. Clone the repository: `git clone https://github.com/rvslan/book-rental-app`
+2. Navigate to the project directory: `cd book-rental-app`
+3. Install dependencies: `npm install`
+4. Run docker: `docker compose up -d`
 
-```bash
-# development
-$ npm run start
+## Configuration
 
-# watch mode
-$ npm run start:dev
+Before running the application, you need to configure the database connection. Open the `.env` file in the project root directory and update the database credentials:
 
-# production mode
-$ npm run start:prod
-```
+    NODE_ENV=testing
+    APP_PORT=3000
+    AT_SECRET=at-secret
+    RT_SECRET=rt-secret
+    SALT_ROUNDS=10
+    DATABASE_URL="postgresql://postgres:123@localhost:5432/nestjs?schema=public"
 
-## Test
 
-```bash
-# unit tests
-$ npm run test
+## Database Migration
 
-# e2e tests
-$ npm run test:e2e
+The application uses Prisma for database access and management. To migrate the database schema, run the following command:
 
-# test coverage
-$ npm run test:cov
-```
+    npx prisma migrate dev
 
-## Support
+This will create the necessary tables and relationships in the database.
 
-Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
+## Running the Application
 
-## Stay in touch
+To start the application, run the following command:
 
-- Author - [Kamil Myśliwiec](https://kamilmysliwiec.com)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
+    npm run start:dev
 
-## License
 
-Nest is [MIT licensed](LICENSE).
-# book-rental-app
+The application will start on http://localhost:3000 by default. You can access the API endpoints using a tool like Postman or through a web browser.
+
+## Running Tests
+
+The application includes unit tests and integration tests to ensure its correctness. To run the tests, use the following command:
+
+    #unit tests
+    npm run test
+    
+    #e2e tests
+    npm run test:e2e
+
+
+This will execute all the test cases and display the results.
+
+## API Documentation
+
+The API documentation is generated using Swagger. You can access the documentation by visiting http://localhost:3000/docs in your web browser. It provides detailed information about each API endpoint, including request and response examples.
+
+## Note: Future Enhancements
+
+	- Elasticsearch integration for advanced book search capabilities 
+	- Sentry integration for error handling and monitoring
+	- CloudWatch integration for comprehensive error monitoring and log analysis
+
+
+

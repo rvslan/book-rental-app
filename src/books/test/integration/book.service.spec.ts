@@ -108,7 +108,7 @@ describe("bookService", () => {
       });
 
       // Call the rentBook method
-      const result: Book = await bookService.rentBook(book.id, user.id);
+      const result: Book = await bookService.rentBook(book.id, user);
 
       // Expect the quantity of the book to decrease by 1
       expect(result.quantity).toBe(book.quantity - 1);
@@ -116,7 +116,7 @@ describe("bookService", () => {
 
     it("should throw NotFoundException when the book is not found", async () => {
       // Call the rentBook method with a non-existent book id
-      await expect(bookService.rentBook(999, user.id)).rejects.toThrow(
+      await expect(bookService.rentBook(999, user)).rejects.toThrow(
         NotFoundException
       );
     });
@@ -133,7 +133,7 @@ describe("bookService", () => {
       });
 
       // Call the rentBook method
-      await expect(bookService.rentBook(book.id, user.id)).rejects.toThrow(
+      await expect(bookService.rentBook(book.id, user)).rejects.toThrow(
         ForbiddenException
       );
     });
@@ -158,7 +158,7 @@ describe("bookService", () => {
       });
 
       // Call the rentBook method
-      await expect(bookService.rentBook(book.id, user.id)).rejects.toThrow(
+      await expect(bookService.rentBook(book.id, user)).rejects.toThrow(
         ForbiddenException
       );
     });
@@ -185,7 +185,7 @@ describe("bookService", () => {
       });
 
       // Call the returnBook method
-      const result: Book = await bookService.returnBook(book.id, user.id);
+      const result: Book = await bookService.returnBook(book.id, user);
 
       // Expect the quantity of the book to increase by 1
       expect(result.quantity).toBe(book.quantity + 1);
@@ -193,7 +193,7 @@ describe("bookService", () => {
 
     it("should throw NotFoundException when the book is not found", async () => {
       // Call the returnBook method with a non-existent book id
-      await expect(bookService.returnBook(999, user.id)).rejects.toThrow(
+      await expect(bookService.returnBook(999, user)).rejects.toThrow(
         NotFoundException
       );
     });
@@ -210,7 +210,7 @@ describe("bookService", () => {
       });
 
       // Call the returnBook method
-      await expect(bookService.returnBook(book.id, user.id)).rejects.toThrow(
+      await expect(bookService.returnBook(book.id, user)).rejects.toThrow(
         Error
       );
     });
