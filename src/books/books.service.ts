@@ -4,20 +4,27 @@ import {
   NotFoundException,
 } from "@nestjs/common";
 import { PrismaService } from "../prisma/prisma.service";
-import { Book, User as UserModel } from "@prisma/client";
+import { User as UserModel, Book } from "@prisma/client";
 
 @Injectable()
 export class BooksService {
   constructor(private prisma: PrismaService) {}
 
-  // Fetch all books associated with a user's bookstore
-  async findAll(userId: number): Promise<Book[]> {
-    const user = await this.prisma.user.findUnique({
+  // Search all books associated with a user's bookstore
+  async searchBooks(query: string, user: UserModel): Promise<Book[]> {
+    return this.prisma.book.findMany({
       where: {
-        id: userId,
+        bookstoreId: user.bookstoreId,
+        OR: [
+          { title: { contains: query, mode: "insensitive" } },
+          { author: { contains: query, mode: "insensitive" } },
+        ],
       },
     });
+  }
 
+  // Fetch all books associated with a user's bookstore
+  async findAll(user: UserModel): Promise<Book[]> {
     // Return books filtered by the user's bookstoreId
     return this.prisma.book.findMany({
       where: {
