@@ -34,10 +34,13 @@ export class BooksService {
   }
 
   // Rent a book
-  async rentBook(bookId: number, userId: number): Promise<Book> {
+  async rentBook(bookId: number, user: UserModel): Promise<Book> {
     return this.prisma.$transaction(async (prisma) => {
-      const book = await prisma.book.findUnique({
-        where: { id: bookId },
+      const book = await prisma.book.findFirst({
+        where: {
+          id: bookId,
+          bookstoreId: user.bookstoreId,
+        },
       });
 
       if (!book) {
@@ -49,7 +52,7 @@ export class BooksService {
       }
 
       const userRentedBook = await prisma.rental.findFirst({
-        where: { bookId, userId, returnedAt: null },
+        where: { bookId, userId: user.id, returnedAt: null },
       });
 
       if (userRentedBook) {
@@ -58,7 +61,7 @@ export class BooksService {
 
       // Create a new rental record
       await prisma.rental.create({
-        data: { bookId, userId },
+        data: { bookId, userId: user.id },
       });
 
       // Decrease the quantity of the book by 1
@@ -70,10 +73,10 @@ export class BooksService {
   }
 
   // Return a book
-  async returnBook(bookId: number, userId: number): Promise<Book> {
+  async returnBook(bookId: number, user: UserModel): Promise<Book> {
     return this.prisma.$transaction(async (prisma) => {
-      const book = await prisma.book.findUnique({
-        where: { id: bookId },
+      const book = await prisma.book.findFirst({
+        where: { id: bookId, bookstoreId: user.bookstoreId },
       });
 
       if (!book) {
@@ -81,7 +84,7 @@ export class BooksService {
       }
 
       const userRentedBook = await prisma.rental.findFirst({
-        where: { bookId, userId, returnedAt: null },
+        where: { bookId, userId: user.id, returnedAt: null },
       });
 
       if (!userRentedBook) {
