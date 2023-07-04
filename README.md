@@ -49,6 +49,13 @@ The application uses Prisma for database access and management. To migrate the d
 
 This will create the necessary tables and relationships in the database.
 
+## Database Seeder
+
+To migrate the database seeders with book stores/books, run the following command:
+    npx prisma db seed
+
+This will create the necessary dummy data in the database.
+
 ## Running the Application
 
 To start the application, run the following command:
