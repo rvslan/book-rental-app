@@ -52,6 +52,7 @@ This will create the necessary tables and relationships in the database.
 ## Database Seeder
 
 To migrate the database seeders with book stores/books, run the following command:
+
     npx prisma db seed
 
 This will create the necessary dummy data in the database.
